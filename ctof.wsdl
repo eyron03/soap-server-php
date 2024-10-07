@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions name="CToF"
+             targetNamespace="urn:CToF"
+             xmlns:tns="urn:CToF"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+             xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+             xmlns="http://schemas.xmlsoap.org/wsdl/">
+
+    <!-- Request and Response Messages for Celsius to Fahrenheit Conversion -->
+    <message name="FahrenheitRequest">
+        <part name="celsius" type="xsd:float"/>
+    </message>
+
+    <message name="FahrenheitResponse">
+        <part name="result" type="xsd:float"/>
+    </message>
+    <message name="GetAllEmployeesRequest" />
+<message name="GetAllEmployeesResponse">
+    <part name="employees" type="xsd:string" />
+</message>
+
+
+    <!-- CRUD Messages -->
+    <message name="CreateEmployeeRequest">
+        <part name="name" type="xsd:string"/>
+        <part name="email" type="xsd:string"/>
+        <part name="position" type="xsd:string"/>
+    </message>
+    
+    <message name="CreateEmployeeResponse">
+        <part name="message" type="xsd:string"/>
+    </message>
+
+    <message name="ReadEmployeeRequest">
+        <part name="id" type="xsd:int"/>
+    </message>
+
+    <message name="ReadEmployeeResponse">
+        <part name="employee" type="xsd:string"/>
+    </message>
+
+    <message name="ReadAllEmployeesResponse">
+        <part name="employees" type="xsd:string"/> <!-- Adjust type as necessary -->
+    </message>
+
+    <message name="UpdateEmployeeRequest">
+        <part name="id" type="xsd:int"/>
+        <part name="name" type="xsd:string"/>
+        <part name="email" type="xsd:string"/>
+        <part name="position" type="xsd:string"/>
+    </message>
+
+    <message name="UpdateEmployeeResponse">
+        <part name="message" type="xsd:string"/>
+    </message>
+
+    <message name="DeleteEmployeeRequest">
+        <part name="id" type="xsd:int"/>
+    </message>
+
+    <message name="DeleteEmployeeResponse">
+        <part name="message" type="xsd:string"/>
+    </message>
+
+    <!-- Port Type Definition -->
+    <portType name="EmployeePort">
+        <operation name="celsiusToFahrenheit">
+            <input message="tns:FahrenheitRequest"/>
+            <output message="tns:FahrenheitResponse"/>
+        </operation>
+        <operation name="getAllEmployees">
+    <input message="tns:GetAllEmployeesRequest" />
+    <output message="tns:GetAllEmployeesResponse" />
+</operation>
+
+        <operation name="createEmployee">
+            <input message="tns:CreateEmployeeRequest"/>
+            <output message="tns:CreateEmployeeResponse"/>
+        </operation>
+        <operation name="readEmployee">
+            <input message="tns:ReadEmployeeRequest"/>
+            <output message="tns:ReadEmployeeResponse"/>
+        </operation>
+        <operation name="readAllEmployees">
+            <output message="tns:ReadAllEmployeesResponse"/> <!-- No input for this operation -->
+        </operation>
+        <operation name="updateEmployee">
+            <input message="tns:UpdateEmployeeRequest"/>
+            <output message="tns:UpdateEmployeeResponse"/>
+        </operation>
+        <operation name="deleteEmployee">
+            <input message="tns:DeleteEmployeeRequest"/>
+            <output message="tns:DeleteEmployeeResponse"/>
+        </operation>
+    </portType>
+
+    <!-- Binding Definition -->
+    <binding name="EmployeeBinding" type="tns:EmployeePort">
+        <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="celsiusToFahrenheit">
+            <soap:operation soapAction="urn:FahrenheitAction"/>
+            <input>
+                <soap:body use="encoded" namespace="urn:CToF" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </input>
+            <output>
+                <soap:body use="encoded" namespace="urn:CToF" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </output>
+        </operation>
+        <operation name="getAllEmployees">
+    <soap:operation soapAction="urn:getAllEmployees" />
+    <input>
+        <soap:body use="encoded" namespace="urn:CToF" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+    </input>
+    <output>
+        <soap:body use="encoded" namespace="urn:CToF" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+    </output>
+</operation>
+
+        <operation name="createEmployee">
+            <soap:operation soapAction="urn:createEmployee"/>
+            <input>
+                <soap:body use="encoded" namespace="urn:CToF" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </input>
+            <output>
+                <soap:body use="encoded" namespace="urn:CToF" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </output>
+        </operation>
+        <operation name="readEmployee">
+            <soap:operation soapAction="urn:readEmployee"/>
+            <input>
+                <soap:body use="encoded" namespace="urn:CToF" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </input>
+            <output>
+                <soap:body use="encoded" namespace="urn:CToF" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </output>
+        </operation>
+        <operation name="readAllEmployees">
+            <soap:operation soapAction="urn:readAllEmployees"/>
+            <output>
+                <soap:body use="encoded" namespace="urn:CToF" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </output>
+        </operation>
+        <operation name="updateEmployee">
+            <soap:operation soapAction="urn:updateEmployee"/>
+            <input>
+                <soap:body use="encoded" namespace="urn:CToF" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </input>
+            <output>
+                <soap:body use="encoded" namespace="urn:CToF" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </output>
+        </operation>
+        <operation name="deleteEmployee">
+            <soap:operation soapAction="urn:deleteEmployee"/>
+            <input>
+                <soap:body use="encoded" namespace="urn:CToF" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </input>
+            <output>
+                <soap:body use="encoded" namespace="urn:CToF" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </output>
+        </operation>
+    </binding>
+
+    <!-- Service Definition -->
+    <service name="WSDLService">
+        <port name="EmployeePort" binding="tns:EmployeeBinding">
+            <soap:address location="http://localhost/php-create-soap-service/soap-create-soapserver.php"/>
+        </port>
+    </service>
+</definitions>
