@@ -162,7 +162,7 @@
         </operation>
     </binding>
 
-    <!-- Service Definition -->
+
     <service name="WSDLService">
         <port name="EmployeePort" binding="tns:EmployeeBinding">
             <soap:address location="http://localhost/php-create-soap-service/soap-create-soapserver.php"/>

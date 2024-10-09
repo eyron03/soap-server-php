@@ -46,16 +46,15 @@ function readEmployee($id) {
     }
     return "Employee not found!";
 }
-// Get all employees
-// Get all employees
+
 function getAllEmployees() {
     $db = getDbConnection();
     $sql = "SELECT * FROM employees";
     $stmt = $db->prepare($sql);
     $stmt->execute();
     
-    $employees = $stmt->fetchAll(PDO::FETCH_ASSOC); // Fetch all employee records as associative array
-    return $employees; // Return the array of employee records
+    $employees = $stmt->fetchAll(PDO::FETCH_ASSOC); 
+    return $employees; 
 }
 
 

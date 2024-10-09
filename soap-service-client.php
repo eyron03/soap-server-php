@@ -40,14 +40,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } catch (SoapFault $sf) {
         echo json_encode(['error' => $sf->getMessage()]);
     }
-    exit; // Prevent further processing
+    exit; 
 }
 
 $pdo = new PDO('mysql:host=localhost;dbname=employee', 'root', '');
 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 // Fetch all employees from the database
-$stmt = $pdo->prepare("SELECT id, name, email, position FROM employees");
+$stmt = $pdo->prepare("SELECT * FROM employees");
 $stmt->execute();
 $employees = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
@@ -62,34 +62,64 @@ $employees = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        body {
+            margin: 20px;
+            background-color: #f8f9fa;
+        }
+        .table-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+    </style>
 </head>
 <body>
 <?php 
 
 try {
-    $x = 5;
-    echo '<div style="text-align: center;">'; // Centering the text
-    echo '<h2>Convert ' . $x . ' Degrees Celsius to Fahrenheit </h2>';
-    $response = $client->celsiusToFahrenheit($x);
-    echo '<h2>' . $x . ' Degrees Celsius is equivalent to ' . $response . ' Degrees Fahrenheit</h2>';
-    echo '</div>'; // Closing the div
+    $x = 5; // Temperature in Celsius
+    $response = $client->celsiusToFahrenheit($x); // Convert to Fahrenheit
+    ?>
+
+    <div class="container text-center mt-5">
+        <div class="card">
+            <div class="card-body">
+                <h2 class="card-title">Convert <?php echo $x; ?> Degrees Celsius to Fahrenheit</h2>
+                <h4 class="card-text"><?php echo $x; ?> Degrees Celsius is equivalent to <?php echo $response; ?> Degrees Fahrenheit</h4>
+            </div>
+        </div>
+    </div>
+
+    <?php
 } catch (SoapFault $sf) {
-    //echo $sf;
-    echo '<div style="text-align: center; color: red;">'; // Centering the error message
-    echo 'Error: ' . $sf->getMessage();
-    echo '</div>'; // Closing the div
+    ?>
+
+    <div class="container text-center mt-5">
+        <div class="alert alert-danger" role="alert">
+            <strong>Error:</strong> <?php echo $sf->getMessage(); ?>
+        </div>
+    </div>
+
+    <?php
 }
-
 ?>
+
 <br>
 
-<div class="container">
-<br>
-    <h1>Employee Management</h1>
-	<br>
+<div class="container d-flex align-items-center justify-content-center min-vh-100">
+    <div class="row justify-content-center w-100">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header text-center">
+                    <h3>Employees Information</h3>
     <button class="btn btn-primary" data-toggle="modal" data-target="#addEmployeeModal">Add Employee</button>
-    <table class="table mt-3" id="employeeTable">
-        <thead>
+    </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered border-success mx-auto text-center">
+                            <thead class="table-dark">
             <tr>
                 <th>ID</th>
                 <th>Name</th>
@@ -120,7 +150,11 @@ try {
         </tbody>
     </table>
 </div>
-
+                           
+    </div>
+</div>
+    
+	
 <!-- Add Employee Modal -->
 <div class="modal fade" id="addEmployeeModal">
     <div class="modal-dialog">
